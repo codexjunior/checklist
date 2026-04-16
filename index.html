@@ -480,9 +480,7 @@ async function submitToNotion() {
   if (!asset) { setStatus('⚠ Please enter an asset / pair', 'error'); return }
 
   const tradeResult    = document.getElementById('trade-result').value    || null
-  const sessionRating  = document.getElementById('session-rating').value
-                         ? Number(document.getElementById('session-rating').value)
-                         : null
+  const sessionRating  = document.getElementById('session-rating').value  || null
   const notes          = document.getElementById('journal-notes').value.trim()
 
   const btn = document.getElementById('submit-to-notion')
