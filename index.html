@@ -28,360 +28,86 @@
     --radius: 10px;
     --sidebar-width: 320px;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    min-height: 100vh;
-    padding: 40px 24px 60px;
-  }
-
-  .dashboard {
-    max-width: max-content;
-    margin: 0 auto;
-    display: flex;
-    gap: 28px;
-    align-items: flex-start;
-  }
-
-  .checklist-container {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .journal-sidebar {
-    width: var(--sidebar-width);
-    flex-shrink: 0;
-    position: sticky;
-    top: 40px;
-    align-self: flex-start;
-  }
-
+  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; min-height: 100vh; padding: 40px 24px 60px; }
+  .dashboard { max-width: max-content; margin: 0 auto; display: flex; gap: 28px; align-items: flex-start; }
+  .checklist-container { flex: 1; min-width: 0; }
+  .journal-sidebar { width: var(--sidebar-width); flex-shrink: 0; position: sticky; top: 40px; align-self: flex-start; }
   @media (max-width: 860px) {
     body { padding: 24px 16px 40px; }
     .dashboard { flex-direction: column; }
-    .journal-sidebar {
-      width: 100%;
-      position: static;
-      margin-top: 24px;
-    }
+    .journal-sidebar { width: 100%; position: static; margin-top: 24px; }
   }
-
-  .journal-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(42,46,57,0.06);
-  }
-  
-  .journal-header {
-    padding: 18px 20px;
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .journal-header span {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text);
-  }
-  
+  .journal-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 8px rgba(42,46,57,0.06); }
+  .journal-header { padding: 18px 20px; background: var(--surface2); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .journal-header span { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); }
   .journal-body { padding: 20px; }
-  
-  .journal-label {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-  
-  .journal-textarea {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    line-height: 1.65;
-    padding: 14px;
-    border-radius: 8px;
-    outline: none;
-    resize: vertical;
-  }
-  
+  .journal-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .journal-textarea { width: 100%; background: var(--surface2); border: 1px solid var(--border2); color: var(--text); font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.65; padding: 14px; border-radius: 8px; outline: none; resize: vertical; }
   .journal-textarea:focus { border-color: var(--accent); }
-  
-  .asset-input {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    padding: 10px 14px;
-    border-radius: 8px;
-    outline: none;
-    margin-bottom: 20px;
-  }
-  
+  .asset-input { width: 100%; background: var(--surface2); border: 1px solid var(--border2); color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; padding: 10px 14px; border-radius: 8px; outline: none; margin-bottom: 20px; }
   .asset-input:focus { border-color: var(--accent); }
-  
-  .rating-select {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    padding: 10px 14px;
-    border-radius: 8px;
-    outline: none;
-    margin-top: 5px;
-    margin-bottom: 20px;
-  }
-  
-  .trade-result-select {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    padding: 10px 14px;
-    border-radius: 8px;
-    outline: none;
-    margin-top: 5px;
-    margin-bottom: 20px;
-  }
-  
-  .submit-btn {
-    width: 100%;
-    background: var(--accent);
-    border: none;
-    color: white;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.05em;
-    padding: 14px 20px;
-    border-radius: 40px;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  
-  .submit-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    background: var(--accent-dk);
-    box-shadow: 0 4px 12px rgba(238,145,62,0.3);
-  }
-
-  .submit-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  .submit-status {
-    font-size: 10px;
-    color: var(--muted);
-    text-align: center;
-    margin-top: 12px;
-    min-height: 16px;
-    transition: color 0.2s;
-  }
-
+  .rating-select, .trade-result-select { width: 100%; background: var(--surface2); border: 1px solid var(--border2); color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; padding: 10px 14px; border-radius: 8px; outline: none; margin-top: 5px; margin-bottom: 20px; }
+  .submit-btn { width: 100%; background: var(--accent); border: none; color: white; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.05em; padding: 14px 20px; border-radius: 40px; cursor: pointer; transition: all 0.2s; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .submit-btn:hover:not(:disabled) { transform: translateY(-2px); background: var(--accent-dk); box-shadow: 0 4px 12px rgba(238,145,62,0.3); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .submit-status { font-size: 10px; color: var(--muted); text-align: center; margin-top: 12px; min-height: 16px; transition: color 0.2s; }
   .submit-status.success { color: #2962a8; }
-  .submit-status.error   { color: var(--warn); }
+  .submit-status.error { color: var(--warn); }
 
-  /* ── Settings panel ── */
-  .settings-toggle {
-    background: none;
-    border: 1px solid var(--border2);
-    color: var(--muted);
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-left: auto;
-    transition: all 0.2s;
-  }
+  /* Settings panel */
+  .settings-toggle { background: none; border: 1px solid var(--border2); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 10px; padding: 4px 10px; border-radius: 6px; cursor: pointer; margin-left: auto; transition: all 0.2s; }
   .settings-toggle:hover { border-color: var(--accent); color: var(--accent-dk); }
-
-  .settings-panel {
-    display: none;
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    background: #fffdf9;
-    gap: 10px;
-    flex-direction: column;
-  }
+  .settings-panel { display: none; padding: 16px 20px; border-bottom: 1px solid var(--border); background: #fffdf9; gap: 10px; flex-direction: column; }
   .settings-panel.open { display: flex; }
-  .settings-panel label {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 4px;
-    display: block;
-  }
-  .settings-panel input {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    padding: 8px 12px;
-    border-radius: 7px;
-    outline: none;
-  }
+  .settings-panel label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; display: block; }
+  .settings-panel input { width: 100%; background: var(--surface2); border: 1px solid var(--border2); color: var(--text); font-family: 'DM Mono', monospace; font-size: 11px; padding: 8px 12px; border-radius: 7px; outline: none; }
   .settings-panel input:focus { border-color: var(--accent); }
-  .settings-hint {
-    font-size: 10px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin-top: 4px;
-  }
-  .settings-save-btn {
-    background: var(--accent-dim);
-    border: 1px solid var(--accent);
-    color: var(--accent-dk);
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    align-self: flex-start;
-    margin-top: 4px;
-  }
+  .settings-hint { font-size: 10px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+  .settings-save-btn { background: var(--accent-dim); border: 1px solid var(--accent); color: var(--accent-dk); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; padding: 8px 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s; align-self: flex-start; margin-top: 4px; }
   .settings-save-btn:hover { background: var(--accent); color: #fff; }
 
-  /* Checklist Styles */
+  /* Checklist */
   header { width: 100%; margin-bottom: 28px; }
-  .header-label {
-    font-family: 'Syne', sans-serif;
-    font-size: 10px; font-weight: 600;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 6px;
-  }
+  .header-label { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
   h1 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--text); line-height: 1.1; }
   h1 span { color: var(--accent); }
   .date-line { margin-top: 8px; color: var(--muted); font-size: 11px; }
-  .reset-btn {
-    margin-top: 12px; background: none;
-    border: 1px solid var(--border2); color: var(--muted);
-    font-family: 'DM Mono', monospace; font-size: 11px;
-    padding: 5px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s;
-  }
+  .reset-btn { margin-top: 12px; background: none; border: 1px solid var(--border2); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 11px; padding: 5px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
   .reset-btn:hover { border-color: var(--accent); color: var(--accent-dk); }
-
   .checklist { width: 100%; display: flex; flex-direction: column; gap: 12px; }
-
-  .section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: border-color 0.3s, opacity 0.3s;
-    box-shadow: 0 1px 4px rgba(42,46,57,0.06);
-  }
+  .section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.3s, opacity 0.3s; box-shadow: 0 1px 4px rgba(42,46,57,0.06); }
   .section.disabled { opacity: 0.4; pointer-events: none; }
   .section.active { border-color: var(--border2); }
-
-  .section-header {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px 18px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface2);
-  }
-  .section-num {
-    font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
-    width: 22px; height: 22px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--border2); color: var(--muted); flex-shrink: 0;
-  }
+  .section-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+  .section-num { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--border2); color: var(--muted); flex-shrink: 0; }
   .section.complete .section-num { background: var(--accent); color: #fff; }
-  .section-title {
-    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase; color: var(--text);
-  }
+  .section-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); }
   .section-status { margin-left: auto; font-size: 10px; color: var(--muted); letter-spacing: 0.05em; }
   .section-body { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
-
   .q-block { display: flex; flex-direction: column; gap: 8px; }
   .q-label { font-size: 11px; color: var(--muted); letter-spacing: 0.03em; line-height: 1.65; }
   .q-label strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 2px; }
-
   .select-wrap { position: relative; }
-  .select-wrap select {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    color: var(--text);
-    font-family: 'DM Mono', monospace; font-size: 12px;
-    padding: 10px 36px 10px 14px; border-radius: 7px;
-    appearance: none; cursor: pointer; outline: none;
-  }
+  .select-wrap select { width: 100%; background: var(--surface2); border: 1px solid var(--border2); color: var(--text); font-family: 'DM Mono', monospace; font-size: 12px; padding: 10px 36px 10px 14px; border-radius: 7px; appearance: none; cursor: pointer; outline: none; }
   .select-wrap select:focus { border-color: var(--accent); }
-  .select-wrap::after {
-    content: '▾'; position: absolute; right: 13px; top: 50%;
-    transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 11px;
-  }
-
-  .outcome {
-    display: none; align-items: flex-start; gap: 10px;
-    padding: 11px 14px; border-radius: 8px; border-left: 3px solid transparent;
-    animation: fadeIn 0.25s ease;
-  }
+  .select-wrap::after { content: '▾'; position: absolute; right: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 11px; }
+  .outcome { display: none; align-items: flex-start; gap: 10px; padding: 11px 14px; border-radius: 8px; border-left: 3px solid transparent; animation: fadeIn 0.25s ease; }
   .outcome.show { display: flex; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
   .outcome.bull { background: var(--bull-dim); border-color: var(--bull); }
   .outcome.bear { background: var(--bear-dim); border-color: var(--bear); }
   .outcome.gold { background: var(--accent-dim); border-color: var(--accent); }
   .outcome.blue { background: var(--neutral-dim); border-color: var(--neutral); }
   .outcome.warn { background: var(--warn-dim); border-color: var(--warn); }
-
   .outcome-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
   .outcome-text { line-height: 1.55; }
   .outcome-text strong { display: block; font-weight: 600; margin-bottom: 2px; font-size: 12px; color: var(--text); }
   .outcome-text span { color: var(--muted); font-size: 11px; }
-
-  .no-trade-banner {
-    display: none;
-    background: var(--warn-dim);
-    border: 1px solid var(--warn);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    margin-bottom: 12px;
-  }
+  .no-trade-banner { display: none; background: var(--warn-dim); border: 1px solid var(--warn); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 12px; }
   .no-trade-banner.show { display: block; }
   .banner-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--warn); margin-bottom: 4px; }
   .banner-sub { color: var(--muted); font-size: 11px; line-height: 1.6; }
-
   #verdict { display: none; border-radius: var(--radius); padding: 20px; margin-bottom: 12px; }
   #verdict.show { display: block; }
   #verdict.continuation { background: var(--bull-dim); border: 1px solid var(--bull); }
@@ -393,15 +119,9 @@
   #verdict.ny-reversal .verdict-title { color: var(--accent-dk); }
   #verdict.wait .verdict-title { color: var(--neutral); }
   .verdict-detail { color: var(--muted); font-size: 11px; line-height: 1.75; }
-
   .divider { height: 1px; background: var(--border); margin: 4px 0; }
-
   .chip-group { display: flex; gap: 8px; }
-  .chip {
-    flex: 1; background: var(--surface2); border: 1px solid var(--border2);
-    color: var(--muted); font-family: 'DM Mono', monospace; font-size: 12px;
-    padding: 9px 0; border-radius: 7px; cursor: pointer; text-align: center; transition: all 0.2s;
-  }
+  .chip { flex: 1; background: var(--surface2); border: 1px solid var(--border2); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 12px; padding: 9px 0; border-radius: 7px; cursor: pointer; text-align: center; transition: all 0.2s; }
   .chip:hover { border-color: var(--accent); color: var(--accent-dk); }
   .chip.selected { background: var(--accent-dim); border-color: var(--accent); color: var(--accent-dk); font-weight: 500; }
 </style>
@@ -409,7 +129,7 @@
 <body>
 
 <div class="dashboard">
-  <!-- LEFT COLUMN: Checklist -->
+  <!-- LEFT: Checklist -->
   <div class="checklist-container">
     <header>
       <div class="header-label">Trading Playbook</div>
@@ -417,8 +137,8 @@
       <div class="date-line" id="date-line">—</div>
       <button class="reset-btn" onclick="resetAll()">↺ Reset Session</button>
     </header>
-
     <div class="checklist">
+
       <!-- SECTION 1: BIAS -->
       <div class="section active" id="sec-bias">
         <div class="section-header">
@@ -458,7 +178,7 @@
         </div>
       </div>
 
-      <!-- GLOBAL NO-TRADE BANNER -->
+      <!-- NO-TRADE BANNER -->
       <div class="no-trade-banner" id="no-trade-banner"><div class="banner-title" id="no-trade-title">⛔ No Trade Today</div><div class="banner-sub" id="no-trade-sub">Stand aside.</div></div>
 
       <!-- SECTION 2: CONFIRMATION -->
@@ -476,7 +196,7 @@
               <div class="q-label"><strong>🇬🇧 London Session Behaviour</strong><br>"Expanded" = London's session candle closed beyond Asia's range in that direction.</div>
               <div class="select-wrap"><select id="london-select" onchange="onLondonChange()"><option value="">— Select —</option><option value="sweep-expand-bias">Swept Asia range then closed in bias direction</option><option value="sweep-expand-counter">Swept Asia range then closed counter to bias</option><option value="same-range">Closed inside Asia's range (no expansion)</option><option value="expand-bias-no-sweep">Expanded past Asia in bias direction (no sweep)</option><option value="expand-counter-no-sweep">Expanded past Asia counter to bias (no sweep)</option></select></div>
               <div class="outcome bull" id="london-continuation"><div class="outcome-icon">✦</div><div class="outcome-text"><strong>NY Continuation Expected</strong><span>London confirmed the bias direction. NY should continue delivering toward the draw.</span></div></div>
-              <div class="outcome gold" id="london-ny-reversal"><div class="outcome-icon">↩</div><div class="outcome-text"><strong id="london-ny-reversal-title">NY Expected to Reverse London Back to Bias</strong><span id="london-ny-reversal-detail">London closed counter to bias. NY is expected to sweep London's expansion then reverse back into the original bias direction.</span></div></div>
+              <div class="outcome gold" id="london-ny-reversal"><div class="outcome-icon">↩</div><div class="outcome-text"><strong id="london-ny-reversal-title">NY Expected to Reverse London Back to Bias</strong><span id="london-ny-reversal-detail">London closed counter to bias.</span></div></div>
               <div class="outcome blue" id="london-neutral"><div class="outcome-icon">◌</div><div class="outcome-text"><strong>Wait for NY to Deliver</strong><span>London gave no clear direction. NY will show its hand — stay reactive, no pre-bias.</span></div></div>
             </div>
           </div>
@@ -492,7 +212,7 @@
         <div class="section-body">
           <div class="q-block">
             <div class="q-label"><strong>⏱️ Execution Timeframe</strong></div>
-            <div class="chip-group"><div class="chip" id="chip-15" onclick="selectTF('15')">15 min - Broader structure, wider SL</div><div class="chip" id="chip-5" onclick="selectTF('5')">5 min - Precision entry, tighter SL</div></div>
+            <div class="chip-group"><div class="chip" id="chip-15" onclick="selectTF('15')">15 min — Broader structure, wider SL</div><div class="chip" id="chip-5" onclick="selectTF('5')">5 min — Precision entry, tighter SL</div></div>
             <div class="outcome gold" id="exec-15" style="display:none;"><div class="outcome-icon">⏱</div><div class="outcome-text"><strong>15-Minute Execution</strong><span>Use 15m structure for entry. Look for displacement + FVG or OB retest. SL beyond the swing.</span></div></div>
             <div class="outcome gold" id="exec-5" style="display:none;"><div class="outcome-icon">⏱</div><div class="outcome-text"><strong>5-Minute Execution</strong><span>Use 5m structure for precision entry. Tighter SL — ensure RR justifies the risk.</span></div></div>
           </div>
@@ -503,10 +223,11 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
-  <!-- RIGHT COLUMN: Journal Sidebar -->
+  <!-- RIGHT: Journal Sidebar -->
   <div class="journal-sidebar">
     <div class="journal-card">
       <div class="journal-header">
@@ -514,47 +235,47 @@
         <button class="settings-toggle" onclick="toggleSettings()">⚙ Config</button>
       </div>
 
-      <!-- Settings Panel (hidden by default) -->
+      <!-- Config Panel -->
       <div class="settings-panel" id="settings-panel">
         <div>
           <label>Apps Script URL</label>
           <input type="text" id="cfg-script-url" placeholder="https://script.google.com/macros/s/…/exec">
-          <div class="settings-hint">Paste your deployed Google Apps Script web app URL here.</div>
+          <div class="settings-hint">Paste your deployed Google Apps Script Web App URL here. Set once — saved in your browser.</div>
         </div>
         <div>
           <label>Notion Database ID</label>
           <input type="text" id="cfg-db-id" placeholder="32-character database ID">
-          <div class="settings-hint">Found in your Notion database URL after the workspace slug and before the ?v= query param.</div>
+          <div class="settings-hint">Found in your Notion database URL — the part after the last / and before ?v=</div>
         </div>
         <button class="settings-save-btn" onclick="saveSettings()">Save Config</button>
       </div>
 
       <div class="journal-body">
         <div class="journal-label">🪙 Asset / Pair</div>
-        <input type="text" id="asset-input" class="asset-input" placeholder="e.g., XAUUSD, EURUSD, NAS100, BTCUSD">
-        
-        <div class="journal-label">📊 Trade Result (if taken)</div>
+        <input type="text" id="asset-input" class="asset-input" placeholder="e.g., XAUUSD, EURUSD, NAS100">
+
+        <div class="journal-label">📊 Trade Result</div>
         <select id="trade-result" class="trade-result-select">
           <option value="">— Select —</option>
           <option value="Win">Win</option>
           <option value="Loss">Loss</option>
           <option value="Breakeven">Breakeven</option>
-          <option value="No trade taken">No trade taken</option>
+          <option value="No Trade">No Trade</option>
         </select>
-        
+
         <div class="journal-label">⭐ Session Rating</div>
         <select id="session-rating" class="rating-select">
           <option value="">— Select —</option>
-          <option value="1">1 - Broke rules badly</option>
-          <option value="2">2 - Struggled with discipline</option>
-          <option value="3">3 - Average execution</option>
-          <option value="4">4 - Good, mostly followed rules</option>
-          <option value="5">5 - Perfect execution</option>
+          <option value="1">1 — Broke rules badly</option>
+          <option value="2">2 — Struggled with discipline</option>
+          <option value="3">3 — Average execution</option>
+          <option value="4">4 — Good, mostly followed rules</option>
+          <option value="5">5 — Perfect execution</option>
         </select>
-        
-        <div class="journal-label">💭 What did you learn from this session?</div>
-        <textarea id="journal-notes" class="journal-textarea" rows="6" placeholder="Record your reflections, mistakes, lessons, emotions... Be specific about what worked and what didn't."></textarea>
-        
+
+        <div class="journal-label">💭 Session Notes</div>
+        <textarea id="journal-notes" class="journal-textarea" rows="6" placeholder="Reflections, mistakes, lessons, emotions…"></textarea>
+
         <button id="submit-to-notion" class="submit-btn" onclick="submitToNotion()">
           <span id="submit-btn-text">Save to Notion</span>
         </button>
@@ -565,336 +286,234 @@
 </div>
 
 <script>
-// ============================================================
-// CONFIG — stored in localStorage so you only set it once
-// ============================================================
+// ── Config (localStorage) ────────────────────────────────────────────────────
 const CFG_KEYS = { url: 'notion_script_url', dbId: 'notion_db_id' }
 
 function loadConfig() {
-  const url  = localStorage.getItem(CFG_KEYS.url)  || ''
-  const dbId = localStorage.getItem(CFG_KEYS.dbId) || ''
-  document.getElementById('cfg-script-url').value = url
-  document.getElementById('cfg-db-id').value      = dbId
+  document.getElementById('cfg-script-url').value = localStorage.getItem(CFG_KEYS.url)  || ''
+  document.getElementById('cfg-db-id').value      = localStorage.getItem(CFG_KEYS.dbId) || ''
 }
-
 function saveSettings() {
-  const url  = document.getElementById('cfg-script-url').value.trim()
-  const dbId = document.getElementById('cfg-db-id').value.trim()
-  localStorage.setItem(CFG_KEYS.url,  url)
-  localStorage.setItem(CFG_KEYS.dbId, dbId)
+  localStorage.setItem(CFG_KEYS.url,  document.getElementById('cfg-script-url').value.trim())
+  localStorage.setItem(CFG_KEYS.dbId, document.getElementById('cfg-db-id').value.trim())
   document.getElementById('settings-panel').classList.remove('open')
   setStatus('✓ Config saved', 'success')
 }
-
 function toggleSettings() {
   document.getElementById('settings-panel').classList.toggle('open')
 }
 
-// ============================================================
-// STATE & CORE CHECKLIST LOGIC
-// ============================================================
+// ── Checklist state ──────────────────────────────────────────────────────────
 const state = { bias:'', dol:'', dolHit:'', aggr:'', london:'', tf:'', nyExpectation:'' }
-
 document.getElementById('date-line').textContent = new Date().toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' })
 
 function showEl(id)  { const e=document.getElementById(id); if(e){e.classList.add('show');e.style.display='';} }
 function hideEl(id)  { const e=document.getElementById(id); if(e){e.classList.remove('show');e.style.display='none';} }
 function flexEl(id)  { const e=document.getElementById(id); if(e){e.style.display='flex';e.classList.add('show');} }
+function lockSection(id,txt){ const s=document.getElementById(id); s.classList.add('disabled'); s.classList.remove('complete'); document.getElementById(id.replace('sec-','')+'-status').textContent=txt||'Locked' }
+function unlockSection(id,txt){ document.getElementById(id).classList.remove('disabled'); document.getElementById(id.replace('sec-','')+'-status').textContent=txt||'Active' }
+function completeSection(id){ document.getElementById(id).classList.add('complete') }
+function hideOutcomes(ids){ ids.forEach(id=>{const e=document.getElementById(id);if(e){e.classList.remove('show');e.style.display='none';}}) }
+function showNoTrade(title,sub){ document.getElementById('no-trade-title').textContent='⛔ '+title; document.getElementById('no-trade-sub').textContent=sub; showEl('no-trade-banner'); lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked'); hideEl('verdict') }
+function clearNoTrade(){ hideEl('no-trade-banner') }
 
-function lockSection(id, txt) {
-  const s=document.getElementById(id)
-  s.classList.add('disabled'); s.classList.remove('complete')
-  document.getElementById(id.replace('sec-','')+'-status').textContent = txt||'Locked'
-}
-function unlockSection(id, txt) {
-  document.getElementById(id).classList.remove('disabled')
-  document.getElementById(id.replace('sec-','')+'-status').textContent = txt||'Active'
-}
-function completeSection(id) { document.getElementById(id).classList.add('complete') }
-
-function hideOutcomes(ids) {
-  ids.forEach(id => { const e=document.getElementById(id); if(e){e.classList.remove('show');e.style.display='none';} })
-}
-
-function showNoTrade(title, sub) {
-  document.getElementById('no-trade-title').textContent = '⛔ ' + title
-  document.getElementById('no-trade-sub').textContent   = sub
-  showEl('no-trade-banner')
-  lockSection('sec-conf','Locked')
-  lockSection('sec-exec','Locked')
-  hideEl('verdict')
-}
-function clearNoTrade() { hideEl('no-trade-banner') }
-
-function onBiasChange() {
-  const val = document.getElementById('bias-select').value
-  state.bias = val
-  hideOutcomes(['bias-bull','bias-bear','dol-no-out','dol-hit-yes-out','dol-hit-no-out'])
-  clearNoTrade()
+function onBiasChange(){
+  const val=document.getElementById('bias-select').value; state.bias=val
+  hideOutcomes(['bias-bull','bias-bear','dol-no-out','dol-hit-yes-out','dol-hit-no-out']); clearNoTrade()
   hideEl('dol-wrap'); hideEl('dol-hit-wrap')
-  document.getElementById('dol-select').value = ''
-  document.getElementById('dol-hit-select').value = ''
-  resetConfirmation()
-  lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked')
-  hideEl('verdict')
-  if (!val) { document.getElementById('bias-status').textContent='Pending'; return }
-  if (val==='bull') flexEl('bias-bull')
-  if (val==='bear') flexEl('bias-bear')
-  document.getElementById('bias-status').textContent = val==='bull' ? 'Bullish ▲' : 'Bearish ▼'
-  document.getElementById('dol-wrap').style.display = 'flex'
+  document.getElementById('dol-select').value=''; document.getElementById('dol-hit-select').value=''
+  resetConfirmation(); lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked'); hideEl('verdict')
+  if(!val){document.getElementById('bias-status').textContent='Pending';return}
+  if(val==='bull')flexEl('bias-bull'); if(val==='bear')flexEl('bias-bear')
+  document.getElementById('bias-status').textContent=val==='bull'?'Bullish ▲':'Bearish ▼'
+  document.getElementById('dol-wrap').style.display='flex'
 }
-
-function onDolChange() {
-  const val = document.getElementById('dol-select').value
-  state.dol = val
-  hideOutcomes(['dol-no-out','dol-hit-yes-out','dol-hit-no-out'])
-  hideEl('dol-hit-wrap')
-  document.getElementById('dol-hit-select').value = ''
-  clearNoTrade()
-  resetConfirmation()
-  lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked')
-  hideEl('verdict')
-  if (!val) return
-  if (val==='no') {
-    flexEl('dol-no-out')
-    showNoTrade('No Trade — No Draw on Liquidity', 'There is no clear target for price to move toward. Without a defined draw, there is no trade.')
-    completeSection('sec-bias')
-    return
-  }
-  document.getElementById('dol-hit-wrap').style.display = 'flex'
+function onDolChange(){
+  const val=document.getElementById('dol-select').value; state.dol=val
+  hideOutcomes(['dol-no-out','dol-hit-yes-out','dol-hit-no-out']); hideEl('dol-hit-wrap')
+  document.getElementById('dol-hit-select').value=''; clearNoTrade(); resetConfirmation()
+  lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked'); hideEl('verdict')
+  if(!val)return
+  if(val==='no'){flexEl('dol-no-out'); showNoTrade('No Trade — No Draw on Liquidity','There is no clear target for price to move toward.'); completeSection('sec-bias'); return}
+  document.getElementById('dol-hit-wrap').style.display='flex'
 }
-
-function onDolHitChange() {
-  const val = document.getElementById('dol-hit-select').value
-  state.dolHit = val
-  hideOutcomes(['dol-hit-yes-out','dol-hit-no-out'])
-  clearNoTrade()
-  resetConfirmation()
-  lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked')
-  hideEl('verdict')
-  if (!val) return
-  if (val==='yes') {
-    flexEl('dol-hit-yes-out')
-    showNoTrade('No Trade — Target Already Delivered', 'Price has already reached the draw on liquidity. The move is complete.')
-    completeSection('sec-bias')
-    return
-  }
-  flexEl('dol-hit-no-out')
-  completeSection('sec-bias')
-  unlockSection('sec-conf','Active')
+function onDolHitChange(){
+  const val=document.getElementById('dol-hit-select').value; state.dolHit=val
+  hideOutcomes(['dol-hit-yes-out','dol-hit-no-out']); clearNoTrade(); resetConfirmation()
+  lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked'); hideEl('verdict')
+  if(!val)return
+  if(val==='yes'){flexEl('dol-hit-yes-out'); showNoTrade('No Trade — Target Already Delivered','Price has already reached the draw on liquidity.'); completeSection('sec-bias'); return}
+  flexEl('dol-hit-no-out'); completeSection('sec-bias'); unlockSection('sec-conf','Active')
 }
-
-function resetConfirmation() {
+function resetConfirmation(){
   state.aggr=''; state.london=''; state.nyExpectation=''
-  document.getElementById('aggr-select').value = ''
-  document.getElementById('london-select').value = ''
-  document.getElementById('conf-q2-wrap').style.display = 'none'
-  hideOutcomes(['aggr-yes','london-continuation','london-ny-reversal','london-neutral'])
-  document.getElementById('conf-status').textContent = 'Locked'
-}
-
-function onAggrChange() {
-  const val = document.getElementById('aggr-select').value
-  state.aggr = val
-  hideOutcomes(['aggr-yes','london-continuation','london-ny-reversal','london-neutral'])
-  clearNoTrade(); hideEl('verdict')
-  document.getElementById('conf-q2-wrap').style.display = 'none'
-  lockSection('sec-exec','Locked')
-  state.london = ''
-  document.getElementById('london-select').value = ''
-  if (!val) return
-  if (val==='yes') {
-    flexEl('aggr-yes')
-    showNoTrade('No Trade — Aggressive Expansion', 'Asia or London already expanded aggressively. The daily range is likely fully delivered.')
-    document.getElementById('conf-status').textContent = '⛔ No Trade'
-    return
-  }
-  document.getElementById('conf-q2-wrap').style.display = 'flex'
-  document.getElementById('conf-status').textContent = 'In Progress'
-}
-
-function onLondonChange() {
-  const val = document.getElementById('london-select').value
-  const bias = state.bias
-  state.london = val
-  hideOutcomes(['london-continuation','london-ny-reversal','london-neutral'])
-  hideEl('verdict'); lockSection('sec-exec','Locked')
-  if (!val) return
-  let expectation = ''
-  if (val==='sweep-expand-bias' || val==='expand-bias-no-sweep') {
-    expectation = 'continuation'
-  } else if (val==='sweep-expand-counter' || val==='expand-counter-no-sweep') {
-    expectation = 'ny-reversal'
-  } else {
-    expectation = 'wait'
-  }
-  state.nyExpectation = expectation
-  const isB = bias === 'bull'
-  if (expectation==='continuation') {
-    flexEl('london-continuation')
-  } else if (expectation==='ny-reversal') {
-    document.getElementById('london-ny-reversal-title').textContent = isB ? 'NY Expected to Sweep London Low then Reverse Bullish' : 'NY Expected to Sweep London High then Reverse Bearish'
-    document.getElementById('london-ny-reversal-detail').textContent = isB ? 'London closed bearish — counter to your bullish bias. NY is expected to sweep below London\'s low, then reverse and expand bullish back toward the draw.' : 'London closed bullish — counter to your bearish bias. NY is expected to sweep above London\'s high, then reverse and expand bearish back toward the draw.'
-    flexEl('london-ny-reversal')
-  } else {
-    flexEl('london-neutral')
-  }
-  const verdictEl = document.getElementById('verdict')
-  verdictEl.className = 'section show ' + expectation
-  verdictEl.style.display = 'block'
-  const titles = { continuation: (isB ? '▲ ' : '▼ ') + 'NY Continuation', 'ny-reversal': '↩ NY Sweeps London — Then Reverses to Bias', wait: '◌ NY — Stay Reactive' }
-  const details = { continuation: isB ? 'London confirmed bullish bias. Wait for pullback into demand zone. Look for bullish CHoCH.' : 'London confirmed bearish bias. Wait for retracement into supply zone. Look for bearish CHoCH.', 'ny-reversal': isB ? 'Wait for NY to sweep below London\'s low. Enter LONG only after bullish CHoCH with displacement.' : 'Wait for NY to sweep above London\'s high. Enter SHORT only after bearish CHoCH with displacement.', wait: 'London gave no directional read. React to whichever extreme gets swept first.' }
-  document.getElementById('verdict-title').textContent = titles[expectation]
-  document.getElementById('verdict-detail').textContent = details[expectation]
-  document.getElementById('conf-status').textContent = '✓ Done'
-  completeSection('sec-conf')
-  populateExecutionContext(expectation, bias)
-  unlockSection('sec-exec','Active')
-}
-
-function populateExecutionContext(expectation, bias) {
-  const ctxEl = document.getElementById('exec-context')
-  const isB = bias === 'bull'
-  const colorMap = { continuation:'bull', 'ny-reversal':'gold', wait:'blue' }
-  ctxEl.className = 'outcome show ' + colorMap[expectation]
-  ctxEl.style.display = 'flex'
-  const titles = { continuation: 'Trend Continuation Entry', 'ny-reversal': 'Reversal Entry — Wait for NY Sweep + Structure Shift', wait: 'Reactive Entry — No Pre-Bias' }
-  const ctxDetails = { continuation: isB ? 'Wait for NY pullback into demand / FVG. Confirm bullish CHoCH. Enter on displacement close.' : 'Wait for NY retracement into supply / FVG. Confirm bearish CHoCH. Enter on displacement close.', 'ny-reversal': isB ? 'Do NOT enter long yet. Wait for NY to sweep below London\'s low. Enter ONLY after bullish CHoCH.' : 'Do NOT enter short yet. Wait for NY to sweep above London\'s high. Enter ONLY after bearish CHoCH.', wait: 'No directional bias. Mark Asia and London extremes. React to whichever level is swept first.' }
-  document.getElementById('exec-ctx-title').textContent = titles[expectation]
-  document.getElementById('exec-ctx-detail').textContent = ctxDetails[expectation]
-}
-
-function selectTF(tf) {
-  state.tf = tf
-  document.getElementById('chip-15').classList.remove('selected')
-  document.getElementById('chip-5').classList.remove('selected')
-  hideEl('exec-15'); hideEl('exec-5')
-  document.getElementById('chip-'+tf).classList.add('selected')
-  flexEl('exec-'+tf)
-  completeSection('sec-exec')
-  document.getElementById('exec-status').textContent = tf+'min ✓'
-}
-
-function resetAll() {
-  state.bias=''; state.dol=''; state.dolHit=''; state.aggr=''; state.london=''; state.tf=''; state.nyExpectation=''
-  ;['bias-select','dol-select','dol-hit-select','aggr-select','london-select'].forEach(id => { document.getElementById(id).value = '' })
-  document.getElementById('chip-15').classList.remove('selected')
-  document.getElementById('chip-5').classList.remove('selected')
-  hideOutcomes(['bias-bull','bias-bear','dol-no-out','dol-hit-yes-out','dol-hit-no-out','aggr-yes','london-continuation','london-ny-reversal','london-neutral','exec-15','exec-5'])
-  clearNoTrade(); hideEl('verdict')
-  hideEl('dol-wrap'); hideEl('dol-hit-wrap')
-  const ctx = document.getElementById('exec-context')
-  ctx.style.display='none'; ctx.classList.remove('show')
+  document.getElementById('aggr-select').value=''; document.getElementById('london-select').value=''
   document.getElementById('conf-q2-wrap').style.display='none'
-  document.getElementById('bias-status').textContent = 'Pending'
-  document.getElementById('conf-status').textContent = 'Locked'
-  document.getElementById('exec-status').textContent = 'Locked'
-  ;['sec-bias','sec-conf','sec-exec'].forEach(id => { document.getElementById(id).classList.remove('complete','disabled') })
+  hideOutcomes(['aggr-yes','london-continuation','london-ny-reversal','london-neutral'])
+  document.getElementById('conf-status').textContent='Locked'
+}
+function onAggrChange(){
+  const val=document.getElementById('aggr-select').value; state.aggr=val
+  hideOutcomes(['aggr-yes','london-continuation','london-ny-reversal','london-neutral']); clearNoTrade(); hideEl('verdict')
+  document.getElementById('conf-q2-wrap').style.display='none'; lockSection('sec-exec','Locked')
+  state.london=''; document.getElementById('london-select').value=''
+  if(!val)return
+  if(val==='yes'){flexEl('aggr-yes'); showNoTrade('No Trade — Aggressive Expansion','Asia or London already expanded aggressively.'); document.getElementById('conf-status').textContent='⛔ No Trade'; return}
+  document.getElementById('conf-q2-wrap').style.display='flex'; document.getElementById('conf-status').textContent='In Progress'
+}
+function onLondonChange(){
+  const val=document.getElementById('london-select').value; const bias=state.bias; state.london=val
+  hideOutcomes(['london-continuation','london-ny-reversal','london-neutral']); hideEl('verdict'); lockSection('sec-exec','Locked')
+  if(!val)return
+  let expectation=''
+  if(val==='sweep-expand-bias'||val==='expand-bias-no-sweep'){expectation='continuation'}
+  else if(val==='sweep-expand-counter'||val==='expand-counter-no-sweep'){expectation='ny-reversal'}
+  else{expectation='wait'}
+  state.nyExpectation=expectation
+  const isB=bias==='bull'
+  if(expectation==='continuation'){flexEl('london-continuation')}
+  else if(expectation==='ny-reversal'){
+    document.getElementById('london-ny-reversal-title').textContent=isB?'NY Expected to Sweep London Low then Reverse Bullish':'NY Expected to Sweep London High then Reverse Bearish'
+    document.getElementById('london-ny-reversal-detail').textContent=isB?'London closed bearish — counter to your bullish bias. NY expected to sweep below London\'s low, then reverse bullish toward the draw.':'London closed bullish — counter to your bearish bias. NY expected to sweep above London\'s high, then reverse bearish toward the draw.'
+    flexEl('london-ny-reversal')
+  } else { flexEl('london-neutral') }
+  const verdictEl=document.getElementById('verdict')
+  verdictEl.className='section show '+expectation; verdictEl.style.display='block'
+  const titles={continuation:(isB?'▲ ':'▼ ')+'NY Continuation','ny-reversal':'↩ NY Sweeps London — Then Reverses to Bias',wait:'◌ NY — Stay Reactive'}
+  const details={continuation:isB?'London confirmed bullish bias. Wait for pullback into demand zone. Look for bullish CHoCH.':'London confirmed bearish bias. Wait for retracement into supply zone. Look for bearish CHoCH.','ny-reversal':isB?'Wait for NY to sweep below London\'s low. Enter LONG only after bullish CHoCH with displacement.':'Wait for NY to sweep above London\'s high. Enter SHORT only after bearish CHoCH with displacement.',wait:'London gave no directional read. React to whichever extreme gets swept first.'}
+  document.getElementById('verdict-title').textContent=titles[expectation]
+  document.getElementById('verdict-detail').textContent=details[expectation]
+  document.getElementById('conf-status').textContent='✓ Done'; completeSection('sec-conf')
+  populateExecutionContext(expectation,bias); unlockSection('sec-exec','Active')
+}
+function populateExecutionContext(expectation,bias){
+  const ctxEl=document.getElementById('exec-context'); const isB=bias==='bull'
+  const colorMap={continuation:'bull','ny-reversal':'gold',wait:'blue'}
+  ctxEl.className='outcome show '+colorMap[expectation]; ctxEl.style.display='flex'
+  const titles={continuation:'Trend Continuation Entry','ny-reversal':'Reversal Entry — Wait for NY Sweep + Structure Shift',wait:'Reactive Entry — No Pre-Bias'}
+  const details={continuation:isB?'Wait for NY pullback into demand / FVG. Confirm bullish CHoCH. Enter on displacement close.':'Wait for NY retracement into supply / FVG. Confirm bearish CHoCH. Enter on displacement close.','ny-reversal':isB?'Do NOT enter long yet. Wait for NY to sweep below London\'s low. Enter ONLY after bullish CHoCH.':'Do NOT enter short yet. Wait for NY to sweep above London\'s high. Enter ONLY after bearish CHoCH.',wait:'No directional bias. Mark Asia and London extremes. React to whichever level is swept first.'}
+  document.getElementById('exec-ctx-title').textContent=titles[expectation]
+  document.getElementById('exec-ctx-detail').textContent=details[expectation]
+}
+function selectTF(tf){
+  state.tf=tf
+  document.getElementById('chip-15').classList.remove('selected'); document.getElementById('chip-5').classList.remove('selected')
+  hideEl('exec-15'); hideEl('exec-5')
+  document.getElementById('chip-'+tf).classList.add('selected'); flexEl('exec-'+tf)
+  completeSection('sec-exec'); document.getElementById('exec-status').textContent=tf+'min ✓'
+}
+function resetAll(){
+  state.bias=''; state.dol=''; state.dolHit=''; state.aggr=''; state.london=''; state.tf=''; state.nyExpectation=''
+  ;['bias-select','dol-select','dol-hit-select','aggr-select','london-select'].forEach(id=>{document.getElementById(id).value=''})
+  document.getElementById('chip-15').classList.remove('selected'); document.getElementById('chip-5').classList.remove('selected')
+  hideOutcomes(['bias-bull','bias-bear','dol-no-out','dol-hit-yes-out','dol-hit-no-out','aggr-yes','london-continuation','london-ny-reversal','london-neutral','exec-15','exec-5'])
+  clearNoTrade(); hideEl('verdict'); hideEl('dol-wrap'); hideEl('dol-hit-wrap')
+  const ctx=document.getElementById('exec-context'); ctx.style.display='none'; ctx.classList.remove('show')
+  document.getElementById('conf-q2-wrap').style.display='none'
+  document.getElementById('bias-status').textContent='Pending'
+  document.getElementById('conf-status').textContent='Locked'
+  document.getElementById('exec-status').textContent='Locked'
+  ;['sec-bias','sec-conf','sec-exec'].forEach(id=>{document.getElementById(id).classList.remove('complete','disabled')})
   lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked')
   document.getElementById('sec-bias').classList.add('active')
 }
 
-// ============================================================
-// NOTION SUBMIT
-// ============================================================
-function setStatus(msg, type='') {
+// ── Status helper ────────────────────────────────────────────────────────────
+function setStatus(msg, type) {
   const el = document.getElementById('submit-status')
   el.textContent = msg
-  el.className = 'submit-status ' + type
+  el.className = 'submit-status ' + (type || '')
 }
 
-function buildReadableState() {
-  const biasMap    = { bull:'Bullish', bear:'Bearish' }
-  const londonMap  = {
-    'sweep-expand-bias':     'Swept Asia → Closed in bias direction',
-    'sweep-expand-counter':  'Swept Asia → Closed counter to bias',
-    'same-range':            'Closed inside Asia range',
-    'expand-bias-no-sweep':  'Expanded in bias direction (no sweep)',
-    'expand-counter-no-sweep':'Expanded counter to bias (no sweep)',
+// ── Build the payload sent to Apps Script ────────────────────────────────────
+// Each value here maps to an EXACT Notion select option name.
+// Apps Script reads these and passes them straight to the Notion API.
+function buildPayload(asset, notes, tradeResult, sessionRating, databaseId) {
+
+  // internal state value → Notion select option
+  const biasMap = { bull: 'Bullish', bear: 'Bearish' }
+
+  // Yes/No fields — state stores 'yes'/'no'
+  const yn = v => v === 'yes' ? 'Yes' : v === 'no' ? 'No' : null
+
+  // London select internal values → exact Notion option strings
+  const londonMap = {
+    'sweep-expand-bias':       "Swept Asia range then closed in bias direction",
+    'sweep-expand-counter':    "Swept Asia range then closed counter to bias",
+    'same-range':              "Closed inside Asia's range (no expansion)",
+    'expand-bias-no-sweep':    "Expanded past Asia in bias direction (no sweep)",
+    'expand-counter-no-sweep': "Expanded past Asia counter to bias (no sweep)"
   }
-  const expectMap  = { continuation:'NY Continuation', 'ny-reversal':'NY Reversal', wait:'Stay Reactive' }
+
+  // NY Expectation — Notion options: Continuation | Reversal | Wait
+  const nyMap = { 'continuation': 'Continuation', 'ny-reversal': 'Reversal', 'wait': 'Wait' }
+
+  // Timeframe — Notion options: 15min | 5min
+  const tfMap = { '15': '15min', '5': '5min' }
 
   return {
-    bias:         biasMap[state.bias]         || '—',
-    dol:          state.dol === 'yes' ? 'Clear target identified' : state.dol === 'no' ? 'No clear draw' : '—',
-    dolHit:       state.dolHit === 'yes' ? 'Target already hit' : state.dolHit === 'no' ? 'Target still available' : '—',
-    aggression:   state.aggr === 'yes' ? 'Aggressive expansion' : state.aggr === 'no' ? 'Contained / Ranging' : '—',
-    london:       londonMap[state.london]     || '—',
-    nyExpectation:expectMap[state.nyExpectation] || '—',
-    timeframe:    state.tf ? state.tf + 'min' : '—',
+    databaseId,
+    date:                new Date().toISOString().split('T')[0],
+    asset:               asset,
+    notes:               notes,
+    tradeResult:         tradeResult,         // 'Win'|'Loss'|'Breakeven'|'No Trade'|null
+    sessionRating:       sessionRating,       // number 1-5 or null
+    bias:                biasMap[state.bias]              || null,
+    dol:                 yn(state.dol),
+    dolHit:              yn(state.dolHit),
+    aggressiveExpansion: yn(state.aggr),
+    londonBehaviour:     londonMap[state.london]          || null,
+    nyExpectation:       nyMap[state.nyExpectation]       || null,
+    executionTimeframe:  tfMap[state.tf]                  || null
   }
 }
 
+// ── Submit ───────────────────────────────────────────────────────────────────
 async function submitToNotion() {
   const scriptUrl = localStorage.getItem(CFG_KEYS.url)  || ''
   const dbId      = localStorage.getItem(CFG_KEYS.dbId) || ''
 
-  if (!scriptUrl) {
-    setStatus('⚠ No Apps Script URL set. Click ⚙ Config to add it.', 'error')
-    return
-  }
-  if (!dbId) {
-    setStatus('⚠ No Notion Database ID set. Click ⚙ Config to add it.', 'error')
-    return
-  }
+  if (!scriptUrl) { setStatus('⚠ No Apps Script URL — click ⚙ Config', 'error'); return }
+  if (!dbId)      { setStatus('⚠ No Database ID — click ⚙ Config', 'error');      return }
 
-  const asset  = document.getElementById('asset-input').value.trim()
-  const result = document.getElementById('trade-result').value
-  const rating = document.getElementById('session-rating').value
-  const notes  = document.getElementById('journal-notes').value.trim()
+  const asset = document.getElementById('asset-input').value.trim()
+  if (!asset) { setStatus('⚠ Please enter an asset / pair', 'error'); return }
 
-  if (!asset) {
-    setStatus('⚠ Please enter an asset / pair before saving.', 'error')
-    return
-  }
+  const tradeResult    = document.getElementById('trade-result').value    || null
+  const sessionRating  = document.getElementById('session-rating').value
+                         ? Number(document.getElementById('session-rating').value)
+                         : null
+  const notes          = document.getElementById('journal-notes').value.trim()
 
   const btn = document.getElementById('submit-to-notion')
   const txt = document.getElementById('submit-btn-text')
-  btn.disabled = true
-  txt.textContent = 'Saving…'
+  btn.disabled = true; txt.textContent = 'Saving…'
   setStatus('Sending to Notion…', '')
 
-  const checklist = buildReadableState()
-
-  const payload = {
-    databaseId: dbId,
-    date:       new Date().toISOString().split('T')[0],
-    asset,
-    result:     result || 'Not selected',
-    rating:     rating ? Number(rating) : null,
-    notes:      notes || '',
-    // Checklist fields
-    bias:          checklist.bias,
-    dol:           checklist.dol,
-    dolHit:        checklist.dolHit,
-    aggression:    checklist.aggression,
-    london:        checklist.london,
-    nyExpectation: checklist.nyExpectation,
-    timeframe:     checklist.timeframe,
-  }
+  const payload = buildPayload(asset, notes, tradeResult, sessionRating, dbId)
+  console.log('📤 Payload to Notion:', JSON.stringify(payload, null, 2))
 
   try {
-    const res = await fetch(scriptUrl, {
+    const res  = await fetch(scriptUrl, {
       method:  'POST',
-      headers: { 'Content-Type': 'text/plain' }, // text/plain avoids preflight CORS issues
-      body:    JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain' }, // text/plain avoids CORS preflight
+      body:    JSON.stringify(payload)
     })
     const data = await res.json()
     if (data.status === 'ok') {
-      setStatus('✓ Entry saved to Notion!', 'success')
+      setStatus('✓ Saved to Notion!', 'success')
       txt.textContent = '✓ Saved'
       setTimeout(() => { txt.textContent = 'Save to Notion'; btn.disabled = false }, 3000)
     } else {
       throw new Error(data.message || 'Unknown error from Apps Script')
     }
   } catch (err) {
-    setStatus('✗ Error: ' + err.message, 'error')
-    txt.textContent = 'Save to Notion'
-    btn.disabled = false
+    setStatus('✗ ' + err.message, 'error')
+    console.error('Notion error:', err)
+    txt.textContent = 'Save to Notion'; btn.disabled = false
   }
 }
 
-// Init: load saved config into settings fields
 loadConfig()
 </script>
 </body>
