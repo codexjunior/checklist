@@ -187,10 +187,15 @@
     gap: 8px;
   }
   
-  .submit-btn:hover {
+  .submit-btn:hover:not(:disabled) {
     transform: translateY(-2px);
     background: var(--accent-dk);
     box-shadow: 0 4px 12px rgba(238,145,62,0.3);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
   
   .submit-status {
@@ -198,7 +203,79 @@
     color: var(--muted);
     text-align: center;
     margin-top: 12px;
+    min-height: 16px;
+    transition: color 0.2s;
   }
+
+  .submit-status.success { color: #2962a8; }
+  .submit-status.error   { color: var(--warn); }
+
+  /* ── Settings panel ── */
+  .settings-toggle {
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: auto;
+    transition: all 0.2s;
+  }
+  .settings-toggle:hover { border-color: var(--accent); color: var(--accent-dk); }
+
+  .settings-panel {
+    display: none;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: #fffdf9;
+    gap: 10px;
+    flex-direction: column;
+  }
+  .settings-panel.open { display: flex; }
+  .settings-panel label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+    display: block;
+  }
+  .settings-panel input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    outline: none;
+  }
+  .settings-panel input:focus { border-color: var(--accent); }
+  .settings-hint {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-top: 4px;
+  }
+  .settings-save-btn {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent);
+    color: var(--accent-dk);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+  .settings-save-btn:hover { background: var(--accent); color: #fff; }
 
   /* Checklist Styles */
   header { width: 100%; margin-bottom: 28px; }
@@ -338,7 +415,7 @@
       <div class="header-label">Trading Playbook</div>
       <h1>Session <span>Checklist</span></h1>
       <div class="date-line" id="date-line">—</div>
-      <button class="reset-btn" onclick="resetAll()">↺ Reset Day</button>
+      <button class="reset-btn" onclick="resetAll()">↺ Reset Session</button>
     </header>
 
     <div class="checklist">
@@ -432,7 +509,26 @@
   <!-- RIGHT COLUMN: Journal Sidebar -->
   <div class="journal-sidebar">
     <div class="journal-card">
-      <div class="journal-header"><span>📓 Journal</span></div>
+      <div class="journal-header">
+        <span>📓 Journal</span>
+        <button class="settings-toggle" onclick="toggleSettings()">⚙ Config</button>
+      </div>
+
+      <!-- Settings Panel (hidden by default) -->
+      <div class="settings-panel" id="settings-panel">
+        <div>
+          <label>Apps Script URL</label>
+          <input type="text" id="cfg-script-url" placeholder="https://script.google.com/macros/s/…/exec">
+          <div class="settings-hint">Paste your deployed Google Apps Script web app URL here.</div>
+        </div>
+        <div>
+          <label>Notion Database ID</label>
+          <input type="text" id="cfg-db-id" placeholder="32-character database ID">
+          <div class="settings-hint">Found in your Notion database URL after the workspace slug and before the ?v= query param.</div>
+        </div>
+        <button class="settings-save-btn" onclick="saveSettings()">Save Config</button>
+      </div>
+
       <div class="journal-body">
         <div class="journal-label">🪙 Asset / Pair</div>
         <input type="text" id="asset-input" class="asset-input" placeholder="e.g., XAUUSD, EURUSD, NAS100, BTCUSD">
@@ -459,7 +555,9 @@
         <div class="journal-label">💭 What did you learn from this session?</div>
         <textarea id="journal-notes" class="journal-textarea" rows="6" placeholder="Record your reflections, mistakes, lessons, emotions... Be specific about what worked and what didn't."></textarea>
         
-        <button id="submit-to-notion" class="submit-btn">Save to Notion</button>
+        <button id="submit-to-notion" class="submit-btn" onclick="submitToNotion()">
+          <span id="submit-btn-text">Save to Notion</span>
+        </button>
         <div id="submit-status" class="submit-status"></div>
       </div>
     </div>
@@ -467,6 +565,31 @@
 </div>
 
 <script>
+// ============================================================
+// CONFIG — stored in localStorage so you only set it once
+// ============================================================
+const CFG_KEYS = { url: 'notion_script_url', dbId: 'notion_db_id' }
+
+function loadConfig() {
+  const url  = localStorage.getItem(CFG_KEYS.url)  || ''
+  const dbId = localStorage.getItem(CFG_KEYS.dbId) || ''
+  document.getElementById('cfg-script-url').value = url
+  document.getElementById('cfg-db-id').value      = dbId
+}
+
+function saveSettings() {
+  const url  = document.getElementById('cfg-script-url').value.trim()
+  const dbId = document.getElementById('cfg-db-id').value.trim()
+  localStorage.setItem(CFG_KEYS.url,  url)
+  localStorage.setItem(CFG_KEYS.dbId, dbId)
+  document.getElementById('settings-panel').classList.remove('open')
+  setStatus('✓ Config saved', 'success')
+}
+
+function toggleSettings() {
+  document.getElementById('settings-panel').classList.toggle('open')
+}
+
 // ============================================================
 // STATE & CORE CHECKLIST LOGIC
 // ============================================================
@@ -670,167 +793,109 @@ function resetAll() {
   lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked')
   document.getElementById('sec-bias').classList.add('active')
 }
+
 // ============================================================
-// GOOGLE FORM INTEGRATION
-//
-// HOW TO GET YOUR ENTRY IDs:
-//   1. In Apps Script, run rebuildFormAndInstallTrigger()
-//   2. Open Logger (View → Logs) and copy the entry.XXXXXX values
-//   3. Paste them into FORM_FIELD_IDS below
+// NOTION SUBMIT
 // ============================================================
+function setStatus(msg, type='') {
+  const el = document.getElementById('submit-status')
+  el.textContent = msg
+  el.className = 'submit-status ' + type
+}
 
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeLaX4SiHY-EUweyJNB5c-5Nxas0aONrXhRzj0akWSs-Wfe2A/formResponse';
-
-const FORM_FIELD_IDS = {
-  "asset": "entry.1835108408",
-  "sessionDate": "entry.1778380498",
-  "bias": "entry.674529378",
-  "dol": "entry.1477873340",
-  "dolHit": "entry.2049596027",
-  "aggressiveExpansion": "entry.636126430",
-  "londonBehaviour": "entry.1801869289",
-  "nyExpectation": "entry.1911590024",
-  "executionTimeframe": "entry.469472650",
-  "journalNotes": "entry.1892918597",
-  "tradeResult": "entry.723333819",
-  "sessionRating": "entry.1524429861"
-};
-
-
-async function sendToGoogleForm() {
-  const statusDiv = document.getElementById('submit-status');
-  const submitBtn = document.getElementById('submit-to-notion');
-
-  // ── Validation ──────────────────────────────────────────────────
-  const assetVal  = document.getElementById('asset-input')?.value.trim() || '';
-  const biasVal   = document.getElementById('bias-select')?.value || '';
-  const dolVal    = document.getElementById('dol-select')?.value || '';
-  const ratingVal = document.getElementById('session-rating')?.value || '';
-
-  if (!assetVal) {
-    statusDiv.textContent = '⚠️ Please enter the Asset / Pair';
-    statusDiv.style.color = 'orange';
-    setTimeout(() => { statusDiv.textContent = ''; }, 3000);
-    return;
+function buildReadableState() {
+  const biasMap    = { bull:'Bullish', bear:'Bearish' }
+  const londonMap  = {
+    'sweep-expand-bias':     'Swept Asia → Closed in bias direction',
+    'sweep-expand-counter':  'Swept Asia → Closed counter to bias',
+    'same-range':            'Closed inside Asia range',
+    'expand-bias-no-sweep':  'Expanded in bias direction (no sweep)',
+    'expand-counter-no-sweep':'Expanded counter to bias (no sweep)',
   }
-  if (!biasVal || !dolVal) {
-    statusDiv.textContent = '⚠️ Please complete Section 1 (Bias & DOL) first';
-    statusDiv.style.color = 'orange';
-    setTimeout(() => { statusDiv.textContent = ''; }, 3000);
-    return;
-  }
-  if (!ratingVal) {
-    statusDiv.textContent = '⚠️ Please select a Session Rating';
-    statusDiv.style.color = 'orange';
-    setTimeout(() => { statusDiv.textContent = ''; }, 3000);
-    return;
-  }
+  const expectMap  = { continuation:'NY Continuation', 'ny-reversal':'NY Reversal', wait:'Stay Reactive' }
 
-  statusDiv.textContent = '📤 Sending to journal...';
-  statusDiv.style.color = 'var(--accent)';
-  submitBtn.disabled = true;
-  submitBtn.style.opacity = '0.6';
-
-  // ── Map checklist values → EXACT rebuilt form option strings ────
-  // These MUST match the choiceValues set in rebuildForm() in Code.gs
-
-  const bias = biasVal === 'bull' ? 'Bullish' : 'Bearish';
-
-  const dol  = dolVal === 'yes' ? 'Yes' : 'No';
-
-  const dolHitRaw = document.getElementById('dol-hit-select')?.value || '';
-  const dolHit    = dolHitRaw === 'yes' ? 'Yes' : 'No';
-
-  const aggrRaw = document.getElementById('aggr-select')?.value || '';
-  const aggressiveExpansion = aggrRaw === 'yes' ? 'Yes' : 'No';
-
-  const londonRaw = document.getElementById('london-select')?.value || '';
-  const londonMap = {
-    'sweep-expand-bias':       'Swept Asia range then closed in bias direction',
-    'sweep-expand-counter':    'Swept Asia range then closed counter to bias',
-    'same-range':              "Closed inside Asia's range (no expansion)",
-    'expand-bias-no-sweep':    'Expanded past Asia in bias direction (no sweep)',
-    'expand-counter-no-sweep': 'Expanded past Asia counter to bias (no sweep)'
-  };
-  const londonBehaviour = londonMap[londonRaw] || '';
-
-  const nyMap = {
-    'continuation': 'Continuation',
-    'ny-reversal':  'Reversal',
-    'wait':         'Wait'
-  };
-  const nyExpectation = nyMap[state.nyExpectation] || '';
-
-  const executionTimeframe = state.tf === '15' ? '15min' : state.tf === '5' ? '5min' : '';
-
-  const journalNotes = document.getElementById('journal-notes')?.value || '';
-
-  // Trade result — must match: Win | Loss | Breakeven | No Trade
-  const tradeResultRaw = document.getElementById('trade-result')?.value || '';
-  const resultMap = {
-    'Win': 'Win', 'Loss': 'Loss', 'Breakeven': 'Breakeven', 'No trade taken': 'No Trade'
-  };
-  const tradeResult = resultMap[tradeResultRaw] || tradeResultRaw;
-
-  const sessionRating = ratingVal;
-
-  // Date — split into year/month/day for Google Forms date fields
-  const now = new Date();
-  const dateYear  = String(now.getFullYear());
-  const dateMonth = String(now.getMonth() + 1);
-  const dateDay   = String(now.getDate());
-
-  // ── Debug ────────────────────────────────────────────────────────
-  console.log('=== SENDING TO FORM ===');
-  console.log('Asset:', assetVal, '| Bias:', bias, '| DOL:', dol);
-  console.log('DOL Hit:', dolHit, '| Aggr:', aggressiveExpansion);
-  console.log('London:', londonBehaviour, '| NY:', nyExpectation);
-  console.log('TF:', executionTimeframe, '| Result:', tradeResult, '| Rating:', sessionRating);
-  console.log('========================');
-
-  // ── Submit via FormData — avoids CORS preflight (no custom Content-Type) ──
-  // Google Forms accepts multipart/form-data posted in no-cors mode.
-  // Unlike URLSearchParams+Content-Type header, FormData does NOT trigger
-  // a preflight OPTIONS request, so the 400 is avoided.
-  const fd = new FormData();
-  fd.append(FORM_FIELD_IDS.asset,               assetVal);
-  fd.append(FORM_FIELD_IDS.sessionDate + '_year',  dateYear);
-  fd.append(FORM_FIELD_IDS.sessionDate + '_month', dateMonth);
-  fd.append(FORM_FIELD_IDS.sessionDate + '_day',   dateDay);
-  fd.append(FORM_FIELD_IDS.bias,                bias);
-  fd.append(FORM_FIELD_IDS.dol,                 dol);
-  fd.append(FORM_FIELD_IDS.dolHit,              dolHit);
-  fd.append(FORM_FIELD_IDS.aggressiveExpansion, aggressiveExpansion);
-  fd.append(FORM_FIELD_IDS.londonBehaviour,     londonBehaviour);
-  fd.append(FORM_FIELD_IDS.nyExpectation,       nyExpectation);
-  fd.append(FORM_FIELD_IDS.executionTimeframe,  executionTimeframe);
-  fd.append(FORM_FIELD_IDS.journalNotes,        journalNotes);
-  fd.append(FORM_FIELD_IDS.tradeResult,         tradeResult);
-  fd.append(FORM_FIELD_IDS.sessionRating,       sessionRating);
-
-  try {
-    await fetch(GOOGLE_FORM_URL, {
-      method: 'POST',
-      mode:   'no-cors',   // We can't read the response — that's expected
-      body:   fd           // FormData: no Content-Type header set manually = no preflight
-    });
-    // With no-cors we always get an opaque response (status 0).
-    // If no exception was thrown, the request went through.
-    statusDiv.textContent = '✅ Session saved to Notion!';
-    statusDiv.style.color = 'green';
-    console.log('✅ FormData posted in no-cors mode — check Google Form responses.');
-  } catch (err) {
-    statusDiv.textContent = '❌ Network error — check console';
-    statusDiv.style.color = 'red';
-    console.error('Submission error:', err);
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.style.opacity = '1';
-    setTimeout(() => { statusDiv.textContent = ''; }, 6000);
+  return {
+    bias:         biasMap[state.bias]         || '—',
+    dol:          state.dol === 'yes' ? 'Clear target identified' : state.dol === 'no' ? 'No clear draw' : '—',
+    dolHit:       state.dolHit === 'yes' ? 'Target already hit' : state.dolHit === 'no' ? 'Target still available' : '—',
+    aggression:   state.aggr === 'yes' ? 'Aggressive expansion' : state.aggr === 'no' ? 'Contained / Ranging' : '—',
+    london:       londonMap[state.london]     || '—',
+    nyExpectation:expectMap[state.nyExpectation] || '—',
+    timeframe:    state.tf ? state.tf + 'min' : '—',
   }
 }
 
-document.getElementById('submit-to-notion')?.addEventListener('click', sendToGoogleForm);
+async function submitToNotion() {
+  const scriptUrl = localStorage.getItem(CFG_KEYS.url)  || ''
+  const dbId      = localStorage.getItem(CFG_KEYS.dbId) || ''
+
+  if (!scriptUrl) {
+    setStatus('⚠ No Apps Script URL set. Click ⚙ Config to add it.', 'error')
+    return
+  }
+  if (!dbId) {
+    setStatus('⚠ No Notion Database ID set. Click ⚙ Config to add it.', 'error')
+    return
+  }
+
+  const asset  = document.getElementById('asset-input').value.trim()
+  const result = document.getElementById('trade-result').value
+  const rating = document.getElementById('session-rating').value
+  const notes  = document.getElementById('journal-notes').value.trim()
+
+  if (!asset) {
+    setStatus('⚠ Please enter an asset / pair before saving.', 'error')
+    return
+  }
+
+  const btn = document.getElementById('submit-to-notion')
+  const txt = document.getElementById('submit-btn-text')
+  btn.disabled = true
+  txt.textContent = 'Saving…'
+  setStatus('Sending to Notion…', '')
+
+  const checklist = buildReadableState()
+
+  const payload = {
+    databaseId: dbId,
+    date:       new Date().toISOString().split('T')[0],
+    asset,
+    result:     result || 'Not selected',
+    rating:     rating ? Number(rating) : null,
+    notes:      notes || '',
+    // Checklist fields
+    bias:          checklist.bias,
+    dol:           checklist.dol,
+    dolHit:        checklist.dolHit,
+    aggression:    checklist.aggression,
+    london:        checklist.london,
+    nyExpectation: checklist.nyExpectation,
+    timeframe:     checklist.timeframe,
+  }
+
+  try {
+    const res = await fetch(scriptUrl, {
+      method:  'POST',
+      headers: { 'Content-Type': 'text/plain' }, // text/plain avoids preflight CORS issues
+      body:    JSON.stringify(payload),
+    })
+    const data = await res.json()
+    if (data.status === 'ok') {
+      setStatus('✓ Entry saved to Notion!', 'success')
+      txt.textContent = '✓ Saved'
+      setTimeout(() => { txt.textContent = 'Save to Notion'; btn.disabled = false }, 3000)
+    } else {
+      throw new Error(data.message || 'Unknown error from Apps Script')
+    }
+  } catch (err) {
+    setStatus('✗ Error: ' + err.message, 'error')
+    txt.textContent = 'Save to Notion'
+    btn.disabled = false
+  }
+}
+
+// Init: load saved config into settings fields
+loadConfig()
 </script>
 </body>
 </html>
