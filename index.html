@@ -134,7 +134,7 @@
     <header>
       <div class="header-label">Trading Playbook</div>
       <h1>Session <span>Checklist</span></h1>
-      <div class="date-line" id="date-line">—</div>
+      <div class="date-line" id="date-line">-</div>
       <button class="reset-btn" onclick="resetAll()">↺ Reset Session</button>
     </header>
     <div class="checklist">
@@ -151,7 +151,7 @@
             <div class="q-label"><strong>🔮 Daily Bias</strong></div>
             <div class="select-wrap">
               <select id="bias-select" onchange="onBiasChange()">
-                <option value="">— Select —</option>
+                <option value="">- Select -</option>
                 <option value="bull">Bullish ▲ - Looking for buy setups</option>
                 <option value="bear">Bearish ▼ - Looking for sell setups</option>
               </select>
@@ -162,16 +162,16 @@
           <div id="dol-wrap" style="display:none; flex-direction:column; gap:12px;">
             <div class="divider"></div>
             <div class="q-block">
-              <div class="q-label"><strong>🎯 Draw on Liquidity (DOL)</strong><br>Is there a clear, unmitigated target — a liquidity pool, unfilled FVG, or key high/low — in the direction of the bias?</div>
-              <div class="select-wrap"><select id="dol-select" onchange="onDolChange()"><option value="">— Select —</option><option value="yes">Yes - Clear target identified</option><option value="no">No - No clear draw</option></select></div>
-              <div class="outcome warn" id="dol-no-out"><div class="outcome-icon">⛔</div><div class="outcome-text"><strong>No Trade — No Draw Identified</strong><span>Without a clear target there is no trade. Identify your levels and revisit next session.</span></div></div>
+              <div class="q-label"><strong>🎯 Draw on Liquidity (DOL)</strong><br>Is there a clear, unmitigated target - a liquidity pool, unfilled FVG, or key high/low - in the direction of the bias?</div>
+              <div class="select-wrap"><select id="dol-select" onchange="onDolChange()"><option value="">- Select -</option><option value="yes">Yes - Clear target identified</option><option value="no">No - No clear draw</option></select></div>
+              <div class="outcome warn" id="dol-no-out"><div class="outcome-icon">⛔</div><div class="outcome-text"><strong>No Trade - No Draw Identified</strong><span>Without a clear target there is no trade. Identify your levels and revisit next session.</span></div></div>
             </div>
             <div id="dol-hit-wrap" style="display:none; flex-direction:column; gap:8px;">
               <div class="q-block">
                 <div class="q-label"><strong>⏰ Has the target already been hit?</strong><br>Has price already reached and closed into the draw on liquidity?</div>
-                <div class="select-wrap"><select id="dol-hit-select" onchange="onDolHitChange()"><option value="">— Select —</option><option value="yes">Yes - Target already reached</option><option value="no">No - Target still available</option></select></div>
-                <div class="outcome warn" id="dol-hit-yes-out"><div class="outcome-icon">⛔</div><div class="outcome-text"><strong>No Trade — Target Already Delivered</strong><span>The draw has been reached. The move is complete. Do not chase — stand aside.</span></div></div>
-                <div class="outcome bull" id="dol-hit-no-out"><div class="outcome-icon">✓</div><div class="outcome-text"><strong>Target Still Available — Proceed to Confirmation</strong><span>Draw is intact. Continue to Section 2.</span></div></div>
+                <div class="select-wrap"><select id="dol-hit-select" onchange="onDolHitChange()"><option value="">- Select -</option><option value="yes">Yes - Target already reached</option><option value="no">No - Target still available</option></select></div>
+                <div class="outcome warn" id="dol-hit-yes-out"><div class="outcome-icon">⛔</div><div class="outcome-text"><strong>No Trade - Target Already Delivered</strong><span>The draw has been reached. The move is complete. Do not chase - stand aside.</span></div></div>
+                <div class="outcome bull" id="dol-hit-no-out"><div class="outcome-icon">✓</div><div class="outcome-text"><strong>Target Still Available - Proceed to Confirmation</strong><span>Draw is intact. Continue to Section 2.</span></div></div>
               </div>
             </div>
           </div>
@@ -186,25 +186,25 @@
         <div class="section-header"><div class="section-num">2</div><div class="section-title">Confirmation</div><div class="section-status" id="conf-status">Locked</div></div>
         <div class="section-body">
           <div class="q-block">
-            <div class="q-label"><strong>⚡ Did Asia or London expand aggressively?</strong><br>Large directional range, strong momentum, minimal retracement — range likely fully delivered.</div>
-            <div class="select-wrap"><select id="aggr-select" onchange="onAggrChange()"><option value="">— Select —</option><option value="yes">Yes - Aggressive expansion (range likely fully delivered)</option><option value="no">No - Contained / ranging</option></select></div>
+            <div class="q-label"><strong>⚡ Did Asia or London expand aggressively?</strong><br>Large directional range, strong momentum, minimal retracement - range likely fully delivered.</div>
+            <div class="select-wrap"><select id="aggr-select" onchange="onAggrChange()"><option value="">- Select -</option><option value="yes">Yes - Aggressive expansion (range likely fully delivered)</option><option value="no">No - Contained / ranging</option></select></div>
             <div class="outcome warn" id="aggr-yes"><div class="outcome-icon">⛔</div><div class="outcome-text"><strong>Do Not Trade</strong><span>Range likely already delivered. All further steps disabled.</span></div></div>
           </div>
           <div id="conf-q2-wrap" style="display:none; flex-direction:column; gap:16px;">
             <div class="divider"></div>
             <div class="q-block">
               <div class="q-label"><strong>🇬🇧 London Session Behaviour</strong><br>"Expanded" = London's session candle closed beyond Asia's range in that direction.</div>
-              <div class="select-wrap"><select id="london-select" onchange="onLondonChange()"><option value="">— Select —</option><option value="sweep-expand-bias">Swept Asia range then closed in bias direction</option><option value="sweep-expand-counter">Swept Asia range then closed counter to bias</option><option value="same-range">Closed inside Asia's range (no expansion)</option><option value="expand-bias-no-sweep">Expanded past Asia in bias direction (no sweep)</option><option value="expand-counter-no-sweep">Expanded past Asia counter to bias (no sweep)</option></select></div>
+              <div class="select-wrap"><select id="london-select" onchange="onLondonChange()"><option value="">- Select -</option><option value="sweep-expand-bias">Swept Asia range then closed in bias direction</option><option value="sweep-expand-counter">Swept Asia range then closed counter to bias</option><option value="same-range">Closed inside Asia's range (no expansion)</option><option value="expand-bias-no-sweep">Expanded past Asia in bias direction (no sweep)</option><option value="expand-counter-no-sweep">Expanded past Asia counter to bias (no sweep)</option></select></div>
               <div class="outcome bull" id="london-continuation"><div class="outcome-icon">✦</div><div class="outcome-text"><strong>NY Continuation Expected</strong><span>London confirmed the bias direction. NY should continue delivering toward the draw.</span></div></div>
               <div class="outcome gold" id="london-ny-reversal"><div class="outcome-icon">↩</div><div class="outcome-text"><strong id="london-ny-reversal-title">NY Expected to Reverse London Back to Bias</strong><span id="london-ny-reversal-detail">London closed counter to bias.</span></div></div>
-              <div class="outcome blue" id="london-neutral"><div class="outcome-icon">◌</div><div class="outcome-text"><strong>Wait for NY to Deliver</strong><span>London gave no clear direction. NY will show its hand — stay reactive, no pre-bias.</span></div></div>
+              <div class="outcome blue" id="london-neutral"><div class="outcome-icon">◌</div><div class="outcome-text"><strong>Wait for NY to Deliver</strong><span>London gave no clear direction. NY will show its hand - stay reactive, no pre-bias.</span></div></div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- VERDICT -->
-      <div id="verdict"><div class="verdict-label">🗽 NY Expectation</div><div class="verdict-title" id="verdict-title">—</div><div class="verdict-detail" id="verdict-detail">—</div></div>
+      <div id="verdict"><div class="verdict-label">🗽 NY Expectation</div><div class="verdict-title" id="verdict-title">-</div><div class="verdict-detail" id="verdict-detail">-</div></div>
 
       <!-- SECTION 3: EXECUTION -->
       <div class="section disabled" id="sec-exec">
@@ -212,14 +212,14 @@
         <div class="section-body">
           <div class="q-block">
             <div class="q-label"><strong>⏱️ Execution Timeframe</strong></div>
-            <div class="chip-group"><div class="chip" id="chip-15" onclick="selectTF('15')">15 min — Broader structure, wider SL</div><div class="chip" id="chip-5" onclick="selectTF('5')">5 min — Precision entry, tighter SL</div></div>
+            <div class="chip-group"><div class="chip" id="chip-15" onclick="selectTF('15')">15 min - Broader structure, wider SL</div><div class="chip" id="chip-5" onclick="selectTF('5')">5 min - Precision entry, tighter SL</div></div>
             <div class="outcome gold" id="exec-15" style="display:none;"><div class="outcome-icon">⏱</div><div class="outcome-text"><strong>15-Minute Execution</strong><span>Use 15m structure for entry. Look for displacement + FVG or OB retest. SL beyond the swing.</span></div></div>
-            <div class="outcome gold" id="exec-5" style="display:none;"><div class="outcome-icon">⏱</div><div class="outcome-text"><strong>5-Minute Execution</strong><span>Use 5m structure for precision entry. Tighter SL — ensure RR justifies the risk.</span></div></div>
+            <div class="outcome gold" id="exec-5" style="display:none;"><div class="outcome-icon">⏱</div><div class="outcome-text"><strong>5-Minute Execution</strong><span>Use 5m structure for precision entry. Tighter SL - ensure RR justifies the risk.</span></div></div>
           </div>
           <div class="divider"></div>
           <div class="q-block">
             <div class="q-label"><strong>Execution Context</strong></div>
-            <div class="outcome" id="exec-context"><div class="outcome-icon">◎</div><div class="outcome-text"><strong id="exec-ctx-title">—</strong><span id="exec-ctx-detail">Complete the confirmation section to populate execution guidance.</span></div></div>
+            <div class="outcome" id="exec-context"><div class="outcome-icon">◎</div><div class="outcome-text"><strong id="exec-ctx-title">-</strong><span id="exec-ctx-detail">Complete the confirmation section to populate execution guidance.</span></div></div>
           </div>
         </div>
       </div>
@@ -240,12 +240,12 @@
         <div>
           <label>Apps Script URL</label>
           <input type="text" id="cfg-script-url" placeholder="https://script.google.com/macros/s/…/exec">
-          <div class="settings-hint">Paste your deployed Google Apps Script Web App URL here. Set once — saved in your browser.</div>
+          <div class="settings-hint">Paste your deployed Google Apps Script Web App URL here. Set once - saved in your browser.</div>
         </div>
         <div>
           <label>Notion Database ID</label>
           <input type="text" id="cfg-db-id" placeholder="32-character database ID">
-          <div class="settings-hint">Found in your Notion database URL — the part after the last / and before ?v=</div>
+          <div class="settings-hint">Found in your Notion database URL - the part after the last / and before ?v=</div>
         </div>
         <button class="settings-save-btn" onclick="saveSettings()">Save Config</button>
       </div>
@@ -256,7 +256,7 @@
 
         <div class="journal-label">📊 Trade Result</div>
         <select id="trade-result" class="trade-result-select">
-          <option value="">— Select —</option>
+          <option value="">- Select -</option>
           <option value="Win">Win</option>
           <option value="Loss">Loss</option>
           <option value="Breakeven">Breakeven</option>
@@ -265,7 +265,7 @@
 
         <div class="journal-label">⭐ Session Rating</div>
         <select id="session-rating" class="rating-select">
-          <option value="">— Select —</option>
+          <option value="">- Select -</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -334,7 +334,7 @@ function onDolChange(){
   document.getElementById('dol-hit-select').value=''; clearNoTrade(); resetConfirmation()
   lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked'); hideEl('verdict')
   if(!val)return
-  if(val==='no'){flexEl('dol-no-out'); showNoTrade('No Trade — No Draw on Liquidity','There is no clear target for price to move toward.'); completeSection('sec-bias'); return}
+  if(val==='no'){flexEl('dol-no-out'); showNoTrade('No Trade - No Draw on Liquidity','There is no clear target for price to move toward.'); completeSection('sec-bias'); return}
   document.getElementById('dol-hit-wrap').style.display='flex'
 }
 function onDolHitChange(){
@@ -342,7 +342,7 @@ function onDolHitChange(){
   hideOutcomes(['dol-hit-yes-out','dol-hit-no-out']); clearNoTrade(); resetConfirmation()
   lockSection('sec-conf','Locked'); lockSection('sec-exec','Locked'); hideEl('verdict')
   if(!val)return
-  if(val==='yes'){flexEl('dol-hit-yes-out'); showNoTrade('No Trade — Target Already Delivered','Price has already reached the draw on liquidity.'); completeSection('sec-bias'); return}
+  if(val==='yes'){flexEl('dol-hit-yes-out'); showNoTrade('No Trade - Target Already Delivered','Price has already reached the draw on liquidity.'); completeSection('sec-bias'); return}
   flexEl('dol-hit-no-out'); completeSection('sec-bias'); unlockSection('sec-conf','Active')
 }
 function resetConfirmation(){
@@ -358,7 +358,7 @@ function onAggrChange(){
   document.getElementById('conf-q2-wrap').style.display='none'; lockSection('sec-exec','Locked')
   state.london=''; document.getElementById('london-select').value=''
   if(!val)return
-  if(val==='yes'){flexEl('aggr-yes'); showNoTrade('No Trade — Aggressive Expansion','Asia or London already expanded aggressively.'); document.getElementById('conf-status').textContent='⛔ No Trade'; return}
+  if(val==='yes'){flexEl('aggr-yes'); showNoTrade('No Trade - Aggressive Expansion','Asia or London already expanded aggressively.'); document.getElementById('conf-status').textContent='⛔ No Trade'; return}
   document.getElementById('conf-q2-wrap').style.display='flex'; document.getElementById('conf-status').textContent='In Progress'
 }
 function onLondonChange(){
@@ -374,12 +374,12 @@ function onLondonChange(){
   if(expectation==='continuation'){flexEl('london-continuation')}
   else if(expectation==='ny-reversal'){
     document.getElementById('london-ny-reversal-title').textContent=isB?'NY Expected to Sweep London Low then Reverse Bullish':'NY Expected to Sweep London High then Reverse Bearish'
-    document.getElementById('london-ny-reversal-detail').textContent=isB?'London closed bearish — counter to your bullish bias. NY expected to sweep below London\'s low, then reverse bullish toward the draw.':'London closed bullish — counter to your bearish bias. NY expected to sweep above London\'s high, then reverse bearish toward the draw.'
+    document.getElementById('london-ny-reversal-detail').textContent=isB?'London closed bearish - counter to your bullish bias. NY expected to sweep below London\'s low, then reverse bullish toward the draw.':'London closed bullish - counter to your bearish bias. NY expected to sweep above London\'s high, then reverse bearish toward the draw.'
     flexEl('london-ny-reversal')
   } else { flexEl('london-neutral') }
   const verdictEl=document.getElementById('verdict')
   verdictEl.className='section show '+expectation; verdictEl.style.display='block'
-  const titles={continuation:(isB?'▲ ':'▼ ')+'NY Continuation','ny-reversal':'↩ NY Sweeps London — Then Reverses to Bias',wait:'◌ NY — Stay Reactive'}
+  const titles={continuation:(isB?'▲ ':'▼ ')+'NY Continuation','ny-reversal':'↩ NY Sweeps London - Then Reverses to Bias',wait:'◌ NY - Stay Reactive'}
   const details={continuation:isB?'London confirmed bullish bias. Wait for pullback into demand zone. Look for bullish CHoCH.':'London confirmed bearish bias. Wait for retracement into supply zone. Look for bearish CHoCH.','ny-reversal':isB?'Wait for NY to sweep below London\'s low. Enter LONG only after bullish CHoCH with displacement.':'Wait for NY to sweep above London\'s high. Enter SHORT only after bearish CHoCH with displacement.',wait:'London gave no directional read. React to whichever extreme gets swept first.'}
   document.getElementById('verdict-title').textContent=titles[expectation]
   document.getElementById('verdict-detail').textContent=details[expectation]
@@ -390,7 +390,7 @@ function populateExecutionContext(expectation,bias){
   const ctxEl=document.getElementById('exec-context'); const isB=bias==='bull'
   const colorMap={continuation:'bull','ny-reversal':'gold',wait:'blue'}
   ctxEl.className='outcome show '+colorMap[expectation]; ctxEl.style.display='flex'
-  const titles={continuation:'Trend Continuation Entry','ny-reversal':'Reversal Entry — Wait for NY Sweep + Structure Shift',wait:'Reactive Entry — No Pre-Bias'}
+  const titles={continuation:'Trend Continuation Entry','ny-reversal':'Reversal Entry - Wait for NY Sweep + Structure Shift',wait:'Reactive Entry - No Pre-Bias'}
   const details={continuation:isB?'Wait for NY pullback into demand / FVG. Confirm bullish CHoCH. Enter on displacement close.':'Wait for NY retracement into supply / FVG. Confirm bearish CHoCH. Enter on displacement close.','ny-reversal':isB?'Do NOT enter long yet. Wait for NY to sweep below London\'s low. Enter ONLY after bullish CHoCH.':'Do NOT enter short yet. Wait for NY to sweep above London\'s high. Enter ONLY after bearish CHoCH.',wait:'No directional bias. Mark Asia and London extremes. React to whichever level is swept first.'}
   document.getElementById('exec-ctx-title').textContent=titles[expectation]
   document.getElementById('exec-ctx-detail').textContent=details[expectation]
@@ -433,7 +433,7 @@ function buildPayload(asset, notes, tradeResult, sessionRating, databaseId) {
   // internal state value → Notion select option
   const biasMap = { bull: 'Bullish', bear: 'Bearish' }
 
-  // Yes/No fields — state stores 'yes'/'no'
+  // Yes/No fields - state stores 'yes'/'no'
   const yn = v => v === 'yes' ? 'Yes' : v === 'no' ? 'No' : null
 
   // London select internal values → exact Notion option strings
@@ -445,10 +445,10 @@ function buildPayload(asset, notes, tradeResult, sessionRating, databaseId) {
     'expand-counter-no-sweep': "Expanded past Asia counter to bias (no sweep)"
   }
 
-  // NY Expectation — Notion options: Continuation | Reversal | Wait
+  // NY Expectation - Notion options: Continuation | Reversal | Wait
   const nyMap = { 'continuation': 'Continuation', 'ny-reversal': 'Reversal', 'wait': 'Wait' }
 
-  // Timeframe — Notion options: 15min | 5min
+  // Timeframe - Notion options: 15min | 5min
   const tfMap = { '15': '15min', '5': '5min' }
 
   return {
@@ -473,8 +473,8 @@ async function submitToNotion() {
   const scriptUrl = localStorage.getItem(CFG_KEYS.url)  || ''
   const dbId      = localStorage.getItem(CFG_KEYS.dbId) || ''
 
-  if (!scriptUrl) { setStatus('⚠ No Apps Script URL — click ⚙ Config', 'error'); return }
-  if (!dbId)      { setStatus('⚠ No Database ID — click ⚙ Config', 'error');      return }
+  if (!scriptUrl) { setStatus('⚠ No Apps Script URL - click ⚙ Config', 'error'); return }
+  if (!dbId)      { setStatus('⚠ No Database ID - click ⚙ Config', 'error');      return }
 
   const asset = document.getElementById('asset-input').value.trim()
   if (!asset) { setStatus('⚠ Please enter an asset / pair', 'error'); return }
